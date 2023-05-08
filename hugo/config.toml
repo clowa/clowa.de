@@ -1,5 +1,148 @@
 baseURL = 'https://me.clowa.de/'
 languageCode = 'en-us'
+languageName = "English"
 title = 'Clowa'
 
 theme = "LoveIt"
+
+# Author config
+[author]
+  name = "Cedric Ahlers"
+
+# Menu config
+[menu]
+  [[menu.main]]
+    weight = 1
+    identifier = "posts"
+    # you can add extra information before the name (HTML format is supported), such as icons
+    pre = '<i class="fa-solid fa-envelope"></i>'
+    # you can add extra information after the name (HTML format is supported), such as icons
+    post = ""
+    name = "Posts"
+    url = "/posts/"
+    # title will be shown when you hover on this menu link
+    title = ""
+  [[menu.main]]
+    weight = 2
+    identifier = "articles"
+    pre = '<i class="fa-sharp fa-regular fa-newspaper"></i>'
+    post = ""
+    name = "Articles"
+    url = "/articles/"
+    title = ""
+
+# Markup related configuration in Hugo
+[markup]
+  # Syntax Highlighting (https://gohugo.io/content-management/syntax-highlighting)
+  [markup.highlight]
+    # false is a necessary configuration (https://github.com/dillonzq/LoveIt/issues/158)
+    noClasses = false
+
+# See: https://hugoloveit.com/theme-documentation-basics/#site-configuration
+[params]
+  # public git repo url only then enableGitInfo is true
+  gitRepo = "https://github.com/clowa/me.clowa.de"
+  # LoveIt NEW | 0.2.0 date format
+  # website title for Open Graph and Twitter Cards
+  title = "Clowa"
+  # website description for RSS, SEO, Open Graph and Twitter Cards
+  description = "This is my cool site"
+  # website images for Open Graph and Twitter Cards
+  # images = ["/logo.png"] # TODO
+
+  # Header config
+  [params.header]
+    [params.header.title]
+      # URL of the LOGO
+      logo = "" # TODO
+      # title name
+      name = "Cedric Ahlers"
+      # you can add extra information before the name (HTML format is supported), such as icons
+      pre = '<i class="fa-solid fa-code"></i> '
+      # you can add extra information after the name (HTML format is supported), such as icons
+      post = ''
+      # LoveIt NEW | 0.2.5 whether to use typeit animation for title name
+      typeit = false
+
+  # Footer config
+  [params.footer]
+    enable = true
+    # LoveIt NEW | 0.2.0 Custom content (HTML format is supported)
+    custom = ''
+    # LoveIt NEW | 0.2.0 whether to show Hugo and theme info
+    hugo = false
+    # LoveIt NEW | 0.2.0 whether to show copyright info
+    copyright = true
+    # LoveIt NEW | 0.2.0 whether to show the author
+    author = true
+    # Site creation time
+    since = 2023
+
+  # Home page config
+  [params.home]
+    # Home page profile
+    [params.home.profile]
+      enable = true
+      # Gravatar Email for preferred avatar in home page
+      gravatarEmail = ""
+      # URL of avatar shown in home page
+      avatarURL = "/images/profile-picture.jpg"
+      # LoveIt CHANGED | 0.2.7 title shown in home page (HTML format is supported)
+      title = "Cedric Ahlers"
+      # subtitle shown in home page (HTML format is supported)
+      subtitle = "This is My Awesome Hugo Site"
+      # whether to use typeit animation for subtitle
+      typeit = true
+      # whether to show social links
+      social = true
+      # LoveIt NEW | 0.2.0 disclaimer (HTML format is supported)
+      disclaimer = ""
+    # Home page posts
+    [params.home.posts]
+      enable = true
+      # special amount of posts in each home posts page
+      paginate = 6
+      # LoveIt DELETED | 0.2.0 replaced with hiddenFromHomePage in params.page
+      # default behavior when you don't set "hiddenFromHomePage" in front matter
+      defaultHiddenFromHomePage = false
+
+  # Social config about the author
+  [params.social]
+    GitHub = "clowa"
+    Instagram = "gandalf_die_garnele_"
+    Stackoverflow = "13078586/clowa"
+    Paypal = "cedricahlers"
+    RSS = false # LoveIt NEW | 0.2.0
+
+  # LoveIt CHANGED | 0.2.0 Page global config
+  [params.page]
+    # LoveIt NEW | 0.2.0 whether to hide a page from search results
+    hiddenFromSearch = false
+    # LoveIt NEW | 0.2.0 whether to enable twemoji
+    twemoji = false
+    # whether to enable lightgallery
+    lightgallery = false
+    # LoveIt NEW | 0.2.0 whether to enable the ruby extended syntax
+    ruby = false
+    # LoveIt NEW | 0.2.0 whether to enable the fraction extended syntax
+    fraction = false
+    # LoveIt NEW | 0.2.0 whether to enable the fontawesome extended syntax
+    fontawesome = true
+    # whether to show link to Raw Markdown content of the content
+    linkToMarkdown = true
+    # LoveIt NEW | 0.2.4 whether to show the full text content in RSS
+    rssFullText = false
+    
+    [params.page.share]
+      enable = true
+      Twitter = true
+      Facebook = true
+      Linkedin = true
+      HackerNews = true
+      Xing = true
+      Pocket = false
+      Weibo = false
+      
+  # LoveIt NEW | 0.2.0 Analytics config
+  [params.analytics]
+    enable = false
