@@ -1,0 +1,21 @@
+version: "3"
+
+tasks:
+  hugo-up:
+    dir: "{{.USER_WORKING_DIR}}/hugo"
+    cmds:
+      - hugo server
+    silent: false
+
+  run:
+    # deps: [build]
+    cmds:
+      - |
+        swa start \
+          --run 'hugo server' \
+          --app-location ./hugo/ \
+          #--app-devserver-url http://localhost:7070 \
+          --api-location ./api/ \
+          #--api-devserver-url http://localhost:7071
+          --output-location ./hugo/public/
+    silent: false
