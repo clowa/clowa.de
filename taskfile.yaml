@@ -1,0 +1,16 @@
+version: "3"
+
+tasks:
+  build:
+    dir: swa/
+    cmds:
+      - flutter build web
+
+  run:
+    deps: [build]
+    cmds:
+      - |
+        swa start \
+          --app-location ./swa/ \
+          --api-location ./api/ \
+          --output-location build/web/
