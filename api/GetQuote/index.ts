@@ -24,6 +24,10 @@ const httpTrigger: AzureFunction = async function (
 
     const responseMessage = quote.content;
     context.res = {
+      Headers: {
+        "Content-Type": "plain/text",
+        "Allow-Control-Allow-Origin": "*",
+      },
       status: 200 /* Defaults to 200 */,
       body: responseMessage,
     };
