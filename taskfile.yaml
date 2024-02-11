@@ -4,18 +4,19 @@ tasks:
   build:
     dir: swa/
     cmds:
-      - flutter build web
+      - npm run build
 
   run:
     dir: swa/
     cmds:
-      - flutter run -d chrome
+      - npm run dev
 
   swa:
     deps: [build]
     cmds:
       - |
         swa start \
+          --run 'npm run dev' \
           --app-location ./swa/ \
           --api-location ./api/ \
-          --output-location build/web/
+          --output-location dist/
