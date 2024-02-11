@@ -12,10 +12,9 @@ tasks:
       - npm run dev
 
   swa:
-    deps: [build]
     cmds:
       - |
-        swa start \
+        swa start http://localhost:4321 \
           --run 'npm run dev' \
           --app-location ./swa/ \
           --api-location ./api/ \
