@@ -12,6 +12,8 @@
   "dependencies": {
     "astro": "^4.3.5",
     "@astrojs/check": "^0.5.2",
+    "@fortawesome/fontawesome-svg-core": "^6.5.1",
+    "@fortawesome/free-solid-svg-icons": "^6.5.1",
     "typescript": "^5.3.3"
   }
 }
