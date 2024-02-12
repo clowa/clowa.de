@@ -6,20 +6,30 @@ on:
       - main
   # Eventually, deploy this to a staging environment
   # See: https://learn.microsoft.com/en-us/azure/static-web-apps/review-publish-pull-requests
-  # pull_request:
-  #   types: [opened, synchronize, reopened, closed]
-  #   branches:
-  #     - main
+  pull_request:
+    types: [opened, synchronize, reopened, closed]
+    branches:
+      - main
 
 jobs:
   build_and_deploy_job:
-    # if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
+    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
     runs-on: ubuntu-latest
     name: Build and Deploy Job
     steps:
-      - uses: actions/checkout@v4
-        with:
-          submodules: true
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # - name: Setup node
+      #   uses: actions/setup-node@v4
+      #   with:
+      #     node-version: 18
+
+      - name: Install dependencies
+        working-directory: swa/
+        run: |
+          npm install
+
       - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
@@ -29,21 +39,24 @@ jobs:
           action: "upload"
           ###### Repository/Build Configurations - These values can be configured to match you app requirements. ######
           # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
-          app_location: "hugo" # App source code path
           api_location: "api" # Api source code path - optional
-          output_location: "public" # Built app content directory - optional
+          app_location: "swa" # App source code path
+          output_location: "dist/" # Built app content directory, relative to app_location - optional
           ###### End of Repository/Build Configurations ######
-        env:
-          HUGO_VERSION: 0.111.3
+          app_build_command: "npm run build"
+        env: # Put a node version on the following line
+          NODE_VERSION: 18
 
-  # close_pull_request_job:
-  #   if: github.event_name == 'pull_request' && github.event.action == 'closed'
-  #   runs-on: ubuntu-latest
-  #   name: Close Pull Request Job
-  #   steps:
-  #     - name: Close Pull Request
-  #       id: closepullrequest
-  #       uses: Azure/static-web-apps-deploy@v1
-  #       with:
-  #         azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
-  #         action: "close"
+  close_pull_request_job:
+    if: github.event_name == 'pull_request' && github.event.action == 'closed'
+    runs-on: ubuntu-latest
+    name: Close Pull Request Job
+    steps:
+      - name: Close Pull Request
+        id: closepullrequest
+        uses: Azure/static-web-apps-deploy@v1
+        with:
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
+          action: "close"
+          app_location: "swa" # App source code path
+

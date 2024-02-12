@@ -1,0 +1,51 @@
+---
+import "../styles/base.css";
+import '@fortawesome/fontawesome-svg-core/styles.css'
+
+interface Props {
+	title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content="Astro description" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+	</head>
+	<body>
+		<slot />
+	</body>
+</html>
+
+<!-- Client side script to load font awesome -->
+<script>
+	// import the required functions and icons
+	import { library, config, dom} from '@fortawesome/fontawesome-svg-core'
+	import { faGithub, faPaypal, faStackOverflow } from '@fortawesome/free-brands-svg-icons'
+	import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons'
+	
+	// since we want astro to handle the css we should disable automatic css injection on the client
+	// this is similar to other ssr frameworks like next.js or nuxt
+	config.autoAddCss = false
+	
+	// create a subset of icons that you are going to use so
+	// astro is able to tree shake and optimize the javascript bundle for best performance
+	library.add(
+			// Brands
+			faGithub,
+			faPaypal,
+			faStackOverflow,
+			// Solid
+			faCircleExclamation,
+	);
+	
+	// replace the unprocessed icons with the svg and watch for additional icons
+	dom.watch();
+	</script>

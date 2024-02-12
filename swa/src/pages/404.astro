@@ -1,0 +1,37 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Page Not Found.">
+  <div>
+    <div class="icon">
+      <i class="fa-solid fa-circle-exclamation fa-10x"></i>
+    </div>
+    <div class="header">
+      <h1>404</h1>
+    </div>
+    <div class="text">
+      <p>Hm, looks like this page doesn't exist ...</p>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  div {
+    color: white;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+  }
+  .icon {
+    color: rgb(210, 43, 43);
+  }
+  .header {
+    font-size: 3rem;
+    color: rgb(var(--accent-light));
+  }
+  .text {
+    font-size: 1.5rem;
+  }
+</style>

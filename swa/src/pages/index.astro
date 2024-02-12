@@ -1,0 +1,102 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+import SocialBubble from '../components/SocialBubble.astro';
+const quote = {
+	text: "I did a dangerous thing for a man in my position: I decided to tell the truth. 📡",
+	author: "Edward Snowden"
+}
+
+---
+
+<Layout title="Cedric Ahlers">
+	<main>
+		<div class="profile-picture">
+			<img
+				src="images/profile-picture.jpg"
+				width="416"
+				height="508"
+				alt="Cedric Ahlers"
+			/>
+		</div>
+		<h1>Nice to meet you 👋🏻 </br>I'm <span class="text-gradient">Cedric</span></h1>
+		<p class="quote">
+			{quote.text}</br><strong>{quote.author}</strong>
+		</p>
+		<div class="social-link-grid">
+			<ul role="list">
+				<SocialBubble
+					brand="github"
+					href="https://github.com/clowa"
+				/>
+				<SocialBubble
+					brand="stack-overflow"
+					href="https://stackoverflow.com/users/13078586"
+				/>
+				<SocialBubble
+					brand="paypal"
+					href="https://paypal.me/cedricahlers"
+				/>
+			</ul>
+	</main>
+</Layout>
+
+<style>
+	main {
+		margin: auto;
+		padding: 1rem;
+		width: 800px;
+		max-width: calc(100% - 2rem);
+		color: white;
+		font-size: 20px;
+		line-height: 1.6;
+	}
+	h1 {
+		font-size: 3rem;
+		font-weight: 700;
+		line-height: 1;
+		text-align: center;
+		margin-bottom: 1em;
+	}
+	.text-gradient {
+		background-image: var(--accent-gradient);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-size: 400%;
+		background-position: 0%;
+	}
+	.profile-picture {
+    display: grid;
+    align-items: center;
+    justify-items: center;
+  }
+  .profile-picture img {
+    border-radius: 25%;
+  }
+	.quote {
+		margin-bottom: 2rem;
+		border: 1px solid rgba(var(--accent-light), 25%);
+		background: linear-gradient(rgba(var(--accent-dark), 66%), rgba(var(--accent-dark), 33%));
+		padding: 1.5rem;
+		border-radius: 8px;
+	}
+	.quote code {
+		font-size: 0.8em;
+		font-weight: bold;
+		background: rgba(var(--accent-light), 12%);
+		color: rgb(var(--accent-light));
+		border-radius: 4px;
+		padding: 0.3em 0.4em;
+	}
+	.quote strong {
+		color: rgb(var(--accent-light));
+	}
+	.social-link-grid {
+		text-align: center;
+	}
+	.social-link-grid ul {
+		display: inline-flex;
+		gap: 2rem;
+		padding: 0;
+	}
+</style>

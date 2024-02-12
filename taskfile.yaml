@@ -1,21 +1,24 @@
 version: "3"
 
 tasks:
-  hugo-up:
-    dir: "{{.USER_WORKING_DIR}}/hugo"
+  build:
+    dir: swa/
     cmds:
-      - hugo server
-    silent: false
+      - npm run build
 
   run:
-    # deps: [build]
+    dir: swa/
+    cmds:
+      - npm run dev
+
+  swa:
+    env:
+      DOMAIN: "http://localhost:7071"
     cmds:
       - |
-        swa start \
-          --run 'hugo server' \
-          --app-location ./hugo/ \
-          #--app-devserver-url http://localhost:7070 \
+        PATH="/opt/homebrew/opt/node@18/bin:$PATH"
+        swa start http://localhost:4321 \
+          --run 'npm run dev' \
+          --app-location ./swa/ \
           --api-location ./api/ \
-          #--api-devserver-url http://localhost:7071
-          --output-location ./hugo/public/
-    silent: false
+          --output-location dist/
