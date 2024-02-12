@@ -1,0 +1,33 @@
+---
+interface Props {
+	brand: string;
+	href: string;
+}
+
+const { href, brand } = Astro.props;
+---
+
+<span class="dot">
+  <a href={href}>
+		<i class:list={['fa-3x', 'fa-brands', `fa-${brand}`]}></i>
+	</a>
+</span>
+
+<style>
+	.dot {
+    height: 4rem;
+    width: 4rem;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1px;
+  }
+  .dot a {
+    color: white;
+  }
+  .dot a:is(:hover, :focus-within) {
+    color: rgb(var(--accent-light));
+    transition: color 150ms ease-in;
+  }
+</style>

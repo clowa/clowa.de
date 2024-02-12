@@ -1,7 +1,7 @@
 :root {
-  --accent: 136, 58, 234;
-  --accent-light: 224, 204, 250;
-  --accent-dark: 49, 10, 101;
+  --accent: 64, 58, 234;
+  --accent-light: 62, 94, 199;
+  --accent-dark: 25, 11, 120;
   --accent-gradient: linear-gradient(
     45deg,
     rgb(var(--accent)),
@@ -11,7 +11,7 @@
 }
 html {
   font-family: system-ui, sans-serif;
-  background: #13151a;
+  background: #292a2d;
   background-size: 224px;
 }
 code {
