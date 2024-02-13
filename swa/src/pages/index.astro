@@ -14,9 +14,8 @@ const quote = {
 		<div class="profile-picture">
 			<img
 				src="images/profile-picture.jpg"
-				width="416"
-				height="508"
 				alt="Cedric Ahlers"
+				class="responsive"
 			/>
 		</div>
 		<h1>Nice to meet you 👋🏻 </br>I'm <span class="text-gradient">Cedric</span></h1>
@@ -72,6 +71,9 @@ const quote = {
   }
   .profile-picture img {
     border-radius: 25%;
+		width: 100%;
+		max-width: 416px;
+		height: auto;
   }
 	.quote {
 		margin-bottom: 2rem;
