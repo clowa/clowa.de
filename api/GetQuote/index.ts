@@ -17,6 +17,16 @@ const httpTrigger: AzureFunction = async function (
   context.log("HTTP trigger function processed a request.");
   console.log("Received request: ", req.headers.host);
 
+  const api_url = process.env.API_URL;
+  if (!api_url) {
+    console.error("Environment variable API_URL is not set.");
+    context.res = {
+      status: 500,
+      body: "Internal Server Error",
+    };
+    return;
+  }
+
   const api_key = process.env.API_KEY;
   if (!api_key) {
     console.error("Environment variable API_KEY is not set.");
@@ -35,7 +45,7 @@ const httpTrigger: AzureFunction = async function (
 
   try {
     const response = (
-      await fetch("https://api.clowa.dev/api/quote", {
+      await fetch(api_url, {
         method: "GET",
         headers: headers,
       })
