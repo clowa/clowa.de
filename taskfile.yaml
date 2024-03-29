@@ -1,10 +1,19 @@
 version: "3"
 
 tasks:
-  build:
+  build-api:
+    dir: api/
+    cmds:
+      - npm run build
+
+  build-swa:
     dir: swa/
     cmds:
       - npm run build
+  build:
+    deps:
+      - build-api
+      - build-swa
 
   run:
     dir: swa/
@@ -12,10 +21,13 @@ tasks:
       - npm run dev
 
   swa:
+    deps:
+      - build
     env:
       DOMAIN: "http://localhost:7071"
     cmds:
       - |
+
         PATH="/opt/homebrew/opt/node@18/bin:$PATH"
         swa start http://localhost:4321 \
           --run 'npm run dev' \
