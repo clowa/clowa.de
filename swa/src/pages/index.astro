@@ -2,9 +2,23 @@
 import Layout from '../layouts/Layout.astro';
 
 import SocialBubble from '../components/SocialBubble.astro';
-const quote = {
-	text: "I did a dangerous thing for a man in my position: I decided to tell the truth. 📡",
-	author: "Edward Snowden"
+
+let quote;
+const websiteDomain = 'me.clowa.de';
+const response = await fetch("https://" + websiteDomain + "/api/getQuote");
+// Check if the API is available and default to a static quote if not.
+if (response.ok) {
+	const data = await response.json();
+	quote = {
+		text: data.content,
+		author: data.author
+	}
+} else {
+	// Default quote if the API is not available.
+	quote = {
+		text: "I did a dangerous thing for a man in my position: I decided to tell the truth. 📡",
+		author: "Edward Snowden"
+	}
 }
 
 ---
