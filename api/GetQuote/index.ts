@@ -17,7 +17,7 @@ const httpTrigger: AzureFunction = async function (
   context.log("HTTP trigger function processed a request.");
   console.log("Received request: ", req.headers.host);
 
-  let api_key = process.env.API_KEY;
+  const api_key = process.env.API_KEY;
   if (!api_key) {
     console.error("Environment variable API_KEY is not set.");
     context.res = {
@@ -27,7 +27,7 @@ const httpTrigger: AzureFunction = async function (
     return;
   }
 
-  let headers = {
+  const headers = {
     "Content-Type": "application/json",
     Accept: "application/json",
     "Ocp-Apim-Subscription-Key": process.env.API_KEY,
