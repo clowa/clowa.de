@@ -3,24 +3,6 @@ import Layout from '../layouts/Layout.astro';
 
 import SocialBubble from '../components/SocialBubble.astro';
 
-let quote;
-const websiteDomain = 'me.clowa.de';
-const response = await fetch("https://" + websiteDomain + "/api/getQuote");
-// Check if the API is available and default to a static quote if not.
-if (response.ok) {
-	const data = await response.json();
-	quote = {
-		text: data.content,
-		author: data.author
-	}
-} else {
-	// Default quote if the API is not available.
-	quote = {
-		text: "I did a dangerous thing for a man in my position: I decided to tell the truth. 📡",
-		author: "Edward Snowden"
-	}
-}
-
 ---
 
 <Layout title="Cedric Ahlers">
@@ -33,8 +15,9 @@ if (response.ok) {
 			/>
 		</div>
 		<h1>Nice to meet you 👋🏻 </br>I'm <span class="text-gradient">Cedric</span></h1>
-		<p class="quote">
-			{quote.text}</br><strong>{quote.author}</strong>
+		<div id="quote-loader" class="loader"></div>
+		<p id="quote" class="quote animate-bottom" style="display:none;">
+			<a id="quote-text"></a></br><strong><a id="quote-author"></a></strong>
 		</p>
 		<div class="social-link-grid">
 			<ul role="list">
@@ -54,7 +37,10 @@ if (response.ok) {
 	</main>
 </Layout>
 
+<script src="../scripts/loadQuote.js"></script>
+
 <style>
+	/* General */
 	main {
 		margin: auto;
 		padding: 1rem;
@@ -78,6 +64,7 @@ if (response.ok) {
 		background-size: 400%;
 		background-position: 0%;
 	}
+	/* Profile Picture */
 	.profile-picture {
     display: grid;
     align-items: center;
@@ -89,6 +76,39 @@ if (response.ok) {
 		max-width: 416px;
 		height: auto;
   }
+	/* Loading animation */
+	.loader {
+		position: relative;
+		border: 4px solid white;
+		border-top: 4px solid rgb(var(--accent-light));
+		border-radius: 50%;
+		width: 40px;
+		height: 40px;
+		left: 50%;
+  	top: 50%;
+		animation: spin 2s linear infinite;
+	}
+	@keyframes spin {
+		0% { transform: rotate(0deg); }
+		100% { transform: rotate(360deg); }
+	}
+	/* Loaded content animation */
+	.animate-bottom {
+		position: relative;
+		-webkit-animation-name: animatebottom;
+		-webkit-animation-duration: 1s;
+		animation-name: animatebottom;
+		animation-duration: 1s
+	}
+	@-webkit-keyframes animatebottom {
+		from { bottom:-100px; opacity:0 } 
+		to { bottom:0px; opacity:1 }
+	}
+	@keyframes animatebottom { 
+		from{ bottom:-100px; opacity:0 } 
+		to{ bottom:0; opacity:1 }
+	}
+	/* Quote text */
 	.quote {
 		margin-bottom: 2rem;
 		border: 1px solid rgba(var(--accent-light), 25%);
@@ -107,6 +127,7 @@ if (response.ok) {
 	.quote strong {
 		color: rgb(var(--accent-light));
 	}
+	/* Social Links */
 	.social-link-grid {
 		text-align: center;
 	}
