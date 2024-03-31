@@ -7,7 +7,7 @@ interface IQoute {
   authorSlug: string;
   length: number;
   tags: string[];
-  creationDate: Date;
+  creationdate: Date;
 }
 
 const httpTrigger: AzureFunction = async function (
@@ -17,6 +17,7 @@ const httpTrigger: AzureFunction = async function (
   context.log("HTTP trigger function processed a request.");
   console.log("Received request: ", req.headers.host);
 
+  console.log("Check presence of environment variables.");
   const api_url = process.env.API_URL;
   if (!api_url) {
     console.error("Environment variable API_URL is not set.");
@@ -40,17 +41,27 @@ const httpTrigger: AzureFunction = async function (
   const headers = {
     "Content-Type": "application/json",
     Accept: "application/json",
-    "Ocp-Apim-Subscription-Key": process.env.API_KEY,
+    "Ocp-Apim-Subscription-Key": api_key,
   };
 
   try {
-    const response = (
-      await fetch(api_url, {
-        method: "GET",
-        headers: headers,
-      })
-    ).json();
-    const quote = (await response) as IQoute;
+    console.log("Fetching quote from API.");
+    const response = await fetch(api_url, {
+      method: "GET",
+      headers: headers,
+    });
+
+    if (!response.headers.get("Content-Type")?.includes("application/json")) {
+      console.error("API did not return JSON response.");
+      context.res = {
+        status: 500,
+        body: "Internal Server Error",
+      };
+      return;
+    }
+
+    const respJson = response.json();
+    const quote = (await respJson) as IQoute;
 
     context.res = {
       Headers: {
@@ -58,7 +69,11 @@ const httpTrigger: AzureFunction = async function (
         "Allow-Control-Allow-Origin": "*",
       },
       status: 200 /* Defaults to 200 */,
-      body: JSON.stringify(quote),
+      body: {
+        quote: quote.content,
+        author: quote.author,
+        creationdate: quote.creationdate,
+      },
     };
   } catch (err) {
     console.error("Failed to call API: ", err);
