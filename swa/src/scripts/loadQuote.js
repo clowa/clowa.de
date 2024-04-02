@@ -3,7 +3,7 @@ const timeout = 8000;
 
 // Default quote in case the API is not available.
 let quote = {
-  text: "I did a dangerous thing for a man in my position: I decided to tell the truth. 📡",
+  content: "I did a dangerous thing for a man in my position: I decided to tell the truth. 📡",
   author: "Edward Snowden"
 }
 
@@ -19,11 +19,11 @@ clearTimeout(id);
 if (response.ok) {
   const data = await response.json();
   quote = {
-    text: data.content,
+    content: data.content,
     author: data.author
   }
 }
-document.getElementById("quote-text").innerText = quote.text;
+document.getElementById("quote-text").innerText = quote.content;
 document.getElementById("quote-author").innerText = quote.author;
 document.getElementById("quote-loader").remove();
 document.getElementById("quote").style.display = "block";

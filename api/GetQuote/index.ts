@@ -70,7 +70,7 @@ const httpTrigger: AzureFunction = async function (
       },
       status: 200 /* Defaults to 200 */,
       body: {
-        quote: quote.content,
+        content: quote.content,
         author: quote.author,
         creationdate: quote.creationdate,
       },
