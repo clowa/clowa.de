@@ -1,6 +1,11 @@
 version: "3"
 
 tasks:
+  npm-install:
+    cmds:
+      - cd api && npm install
+      - cd swa && npm install
+
   build-api:
     dir: api/
     cmds:
@@ -23,11 +28,8 @@ tasks:
   swa:
     deps:
       - build
-    env:
-      DOMAIN: "http://localhost:7071"
     cmds:
       - |
-
         PATH="/opt/homebrew/opt/node@18/bin:$PATH"
         swa start http://localhost:4321 \
           --run 'npm run dev' \
