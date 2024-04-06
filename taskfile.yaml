@@ -6,26 +6,11 @@ tasks:
       - cd api && npm install
       - cd swa && npm install
 
-  build-api:
-    dir: api/
-    cmds:
-      - npm run build
-
-  build-swa:
-    dir: swa/
-    cmds:
-      - npm run build
   build:
-    deps:
-      - build-api
-      - build-swa
+    cmds:
+      - swa build --api-location api/ --app-location swa/ --auto
 
   run:
-    dir: swa/
-    cmds:
-      - npm run dev
-
-  swa:
     deps:
       - build
     cmds:
