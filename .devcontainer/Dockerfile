@@ -1,27 +1,30 @@
+FROM mcr.microsoft.com/dotnet/sdk:8.0 as azure-functions-core-tools
+
+RUN git clone https://github.com/amih90/azure-functions-core-tools.git /tmp/azure-functions-core-tools \
+    && cd /tmp/azure-functions-core-tools \
+    && git checkout amih90/linux-arm64 \
+    && dotnet publish src/Azure.Functions.Cli/Azure.Functions.Cli.csproj --runtime linux-arm64 --output /opt/azure-functions-core-tools
+
+
+FROM node:18-bullseye as final
+
 # FROM swacli/static-web-apps-cli:1.1.7
-FROM node:18-bullseye
+FROM node:18-bookworm
 
 ARG TARGETARCH
+
+RUN apt-get update \
+    && apt-get upgrade -y \
+    && apt-get dist-upgrade -y \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 # Install Azure Static web app CLI
 RUN npm install -g @azure/static-web-apps-cli
 
-# Install Microsoft GPG keys
-# RUN curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg \
-#     && mv microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg \
-#     && sh -c 'echo "deb [arch=$TARGETARCH] https://packages.microsoft.com/debian/11/prod bullseye main" > /etc/apt/sources.list.d/dotnetdev.list'
-
 # Install azure function core tools
 # Not nativily supported for linux/arm64 see: https://github.com/Azure/azure-functions-core-tools/issues/3112
-RUN curl -L https://github.com/mohsinonxrm/azure-functions-core-tools/releases/download/4.23_arm64/Azure.Functions.Cli.linux-ARM64.zip -o azure-functions-cli.zip \
-    && unzip azure-functions-cli.zip -d /opt/ \
-    && mv /opt/Azure.Functions.Cli.linux-ARM64 /opt/azure-functions-cli \
-    && ln -s /opt/azure-functions-cli/func /usr/local/bin/func \
-    && chmod +x /opt/azure-functions-cli/func \
-    && rm -f azure-functions-cli.zip
-
-# Install Astro CLI
-# RUN npm install -g astro
-
-# Install typescript globally
-# RUN npm install -g typescript
+COPY --from=azure-functions-core-tools /opt/azure-functions-core-tools /opt/azure-functions-core-tools
+RUN ln -s /opt/azure-functions-core-tools/func /usr/local/bin/func \
+&& chmod +x /opt/azure-functions-core-tools/func \
+&& rm -f azure-functions-cli.zip
