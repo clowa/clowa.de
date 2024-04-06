@@ -1,0 +1,28 @@
+{
+  "name": "Azure Static Web Apps & Astro",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "ms-azuretools.vscode-azurefunctions",
+        "ms-azuretools.vscode-azurestaticwebapps",
+        "ms-vscode.vscode-typescript-tslint-plugin",
+        "esbenp.prettier-vscode"
+      ]
+    },
+    "settings": {
+      "terminal.integrated.shell.linux": "/bin/bash"
+    }
+  },
+  "dockerFile": "Dockerfile",
+  "appPort": 4280,
+  "forwardPorts": [4280, 7071],
+  "features": {
+    "ghcr.io/devcontainers-contrib/features/go-task:1": {}
+  },
+  "mounts": [
+    "source=${localWorkspaceFolderBasename}-api-node_modules,target=${containerWorkspaceFolder}/api/node_modules,type=volume",
+    "source=${localWorkspaceFolderBasename}-swa-node_modules,target=${containerWorkspaceFolder}/swa/node_modules,type=volume"
+  ]
+  // "postCreateCommand": "npm install"
+}
