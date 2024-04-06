@@ -1,23 +1,29 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0 as azure-functions-core-tools
 
-RUN git clone https://github.com/amih90/azure-functions-core-tools.git /tmp/azure-functions-core-tools \
+# Dotnet caching - see: https://github.com/dotnet/dotnet-docker/issues/3353#issuecomment-996013919
+RUN --mount=type=cache,id=nuget,target=/root/.nuget/packages \ 
+    git clone https://github.com/amih90/azure-functions-core-tools.git /tmp/azure-functions-core-tools \
     && cd /tmp/azure-functions-core-tools \
     && git checkout amih90/linux-arm64 \
     && dotnet publish src/Azure.Functions.Cli/Azure.Functions.Cli.csproj --runtime linux-arm64 --output /opt/azure-functions-core-tools
 
-
-FROM node:18-bullseye as final
-
 # FROM swacli/static-web-apps-cli:1.1.7
-FROM node:18-bookworm
+FROM node:18-bookworm as final
 
 ARG TARGETARCH
 
-RUN apt-get update \
+ARG USERNAME=codespace
+ARG USER_UID=1001
+ARG USER_GID=$USER_UID
+
+# APT caching - see: https://vsupalov.com/buildkit-cache-mount-dockerfile/
+RUN --mount=target=/var/lib/apt/lists,type=cache,sharing=locked \
+    --mount=target=/var/cache/apt,type=cache,sharing=locked \
+    apt-get update \
     && apt-get upgrade -y \
     && apt-get dist-upgrade -y \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+    && apt-get install -y --no-install-recommends \
+        sudo 
 
 # Install Azure Static web app CLI
 RUN npm install -g @azure/static-web-apps-cli
@@ -28,3 +34,10 @@ COPY --from=azure-functions-core-tools /opt/azure-functions-core-tools /opt/azur
 RUN ln -s /opt/azure-functions-core-tools/func /usr/local/bin/func \
 && chmod +x /opt/azure-functions-core-tools/func \
 && rm -f azure-functions-cli.zip
+
+# Create a non-root user to use - see: https://code.visualstudio.com/remote/advancedcontainers/add-nonroot-user#_creating-a-nonroot-user
+RUN groupadd --gid $USER_GID $USERNAME \
+    && useradd --uid $USER_UID --gid $USER_GID -m --shell /bin/bash ${USERNAME} \
+    && echo "${USERNAME} ALL=(root) NOPASSWD:ALL" > /etc/sudoers.d/${USERNAME} \
+    && chmod 0440 /etc/sudoers.d/${USERNAME}
+USER ${USERNAME}

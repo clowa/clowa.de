@@ -16,17 +16,17 @@
       ]
     },
     "settings": {
-      "terminal.integrated.shell.linux": "/bin/bash"
+      "terminal.integrated.shell.linux": "/bin/bash",
+      "remote.containers.copyGitConfig": true
     }
   },
   "dockerFile": "Dockerfile",
+  // "containerUser": "node",
+  "remoteUser": "codespace",
   "appPort": 4280,
   "forwardPorts": [4280, 7071],
   "features": {
     "ghcr.io/devcontainers-contrib/features/go-task:1": {}
-  },
-  "containerEnv": {
-    "SSH_AUTH_SOCK": "/run/host-services/ssh-auth.sock"
   },
   "mounts": [
     "source=${localEnv:HOME}/.ssh,target=/root/.ssh,type=bind,readonly",
