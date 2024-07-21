@@ -22,7 +22,7 @@
     }
   },
   "dockerFile": "Dockerfile",
-  // "containerUser": "node",
+  "containerUser": "codespace",
   "remoteUser": "codespace",
   "appPort": 4280,
   "forwardPorts": [4280, 7071],

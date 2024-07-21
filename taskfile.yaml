@@ -16,7 +16,8 @@ tasks:
     cmds:
       - |
         PATH="/opt/homebrew/opt/node@18/bin:$PATH"
-        swa start http://localhost:4321 \
+        swa start \
+          --app-devserver-url http://localhost:4321 \
           --run 'npm run dev' \
           --app-location ./swa/ \
           --api-location ./api/ \
