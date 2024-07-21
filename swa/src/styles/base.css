@@ -1,11 +1,11 @@
 :root {
-  --accent: 64, 58, 234;
-  --accent-light: 62, 94, 199;
+  --accent: 75, 70, 232;
+  --accent-light: 105, 129, 235;
   --accent-dark: 25, 11, 120;
   --accent-gradient: linear-gradient(
     45deg,
     rgb(var(--accent)),
-    rgb(var(--accent-light)) 30%,
+    rgb(var(--accent-light)) 50%,
     white 60%
   );
 }
