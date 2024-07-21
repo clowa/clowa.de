@@ -7,11 +7,11 @@ interface Props {
 const { href, brand } = Astro.props;
 ---
 
-<span class="dot">
-  <a href={href}>
+<div class="dot">
+  <a href={href} aria-label=`to ${brand}`>
 		<i class:list={['fa-3x', 'fa-brands', `fa-${brand}`]}></i>
 	</a>
-</span>
+</div>
 
 <style>
 	.dot {
