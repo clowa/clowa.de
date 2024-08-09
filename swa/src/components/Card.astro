@@ -12,7 +12,6 @@ const { href, title, body } = Astro.props;
 	<a href={href}>
 		<h2>
 			{title}
-			<div>&rarr;</div>
 		</h2>
 		<p>
 			{body}
@@ -24,7 +23,7 @@ const { href, title, body } = Astro.props;
 		list-style: none;
 		display: flex;
 		padding: 1px;
-		background-color: #23262d;
+		background-color: var(--contrast-dark);
 		background-image: none;
 		background-size: 400%;
 		border-radius: 7px;
@@ -39,7 +38,7 @@ const { href, title, body } = Astro.props;
 		padding: calc(1.5rem - 1px);
 		border-radius: 8px;
 		color: white;
-		background-color: #23262d;
+		background-color: var(--contrast-dark);
 		opacity: 0.8;
 	}
 	h2 {

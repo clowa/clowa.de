@@ -3,7 +3,11 @@ import Layout from '../layouts/Layout.astro';
 import SocialBubble from '../components/SocialBubble.astro';
 // import the Image component and the image
 import { Image } from 'astro:assets';
+import CardGrid from '../components/CardGrid.astro'
+// import custom scripts
+import  loadRepositories  from '../scripts/loadRepositories.js';
 
+const repos = await loadRepositories();
 ---
 
 <Layout title="Cedric Ahlers">
@@ -18,10 +22,6 @@ import { Image } from 'astro:assets';
 			/>
 		</div>
 		<h1>Nice to meet you 👋🏻 </br>I'm <span class="text-gradient">Cedric</span></h1>
-		<div id="quote-loader" class="loader"></div>
-		<p id="quote" class="quote animate-bottom" style="display:none;">
-			<a id="quote-text" role="article" aria-label="Quote of the day"></a></br><strong><a id="quote-author" role="article" aria-label="Author of the quote of the day"></a></strong>
-		</p>
 		<div class="social-link-grid">
 			<ul role="list">
 				<SocialBubble
@@ -37,6 +37,19 @@ import { Image } from 'astro:assets';
 					href="https://paypal.me/cedricahlers"
 				/>
 			</ul>
+		</div>
+		<div id="quote-loader" class="loader"></div>
+		<p id="quote" class="quote animate-bottom" style="display:none;">
+			<a id="quote-text" role="article" aria-label="Quote of the day"></a></br><strong><a id="quote-author" role="article" aria-label="Author of the quote of the day"></a></strong>
+		</p>
+		<CardGrid
+			title="My Recent GitHub Repositories"
+			cards={repos.map((repo: { name: any; description: any; html_url: any }) => ({
+				title: repo.name,
+				body: repo.description,
+				href: repo.html_url
+		}))}
+		>
 	</main>
 </Layout>
 
