@@ -1,0 +1,62 @@
+---
+import Card from './Card.astro'
+
+interface Props {
+	title: string;
+	cards: Array<{
+    href: string;
+    title: string;
+    body: string;
+  }>;
+}
+
+const { title, cards } = Astro.props;
+---
+
+<section class="section-container">
+  <div class="content-wrapper">
+    <h2 class="section-title">{title}</h2>
+    <div class="repositories-grid">
+      {cards.map((card) => (
+        <Card {...card} />
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+/* Container for the entire section */
+.section-container {
+  width: 100%;
+  max-width: 72rem;
+  margin: 0 auto;
+  /* padding: 3rem 0; */
+  color: white;
+}
+
+/* Wrapper for the content inside the section */
+.content-wrapper {
+  /* padding: 0.25rem 1.5rem; */
+}
+
+/* Section title styling */
+.section-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+}
+
+/* Grid layout for the repositories */
+.repositories-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 1.5rem;
+}
+
+/* For viewport with a width greater than 768px use two grid columns */
+@media (min-width: 768px) {
+  .repositories-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+</style>

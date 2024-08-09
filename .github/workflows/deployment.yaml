@@ -17,6 +17,9 @@ jobs:
     runs-on: ubuntu-latest
     environment: static-web-app
     name: Build and Deploy Job
+    permissions:
+      contents: read
+      pull-requests: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4

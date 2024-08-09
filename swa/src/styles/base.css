@@ -8,12 +8,15 @@
     rgb(var(--accent-light)) 50%,
     white 60%
   );
+  --contrast: #292a2d;
+  --contrast-dark: #23262d;
 }
+
 html {
   font-family: system-ui, sans-serif;
-  background: #292a2d;
-  background-size: 224px;
+  background: var(--contrast);
 }
+
 code {
   font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
     Bitstream Vera Sans Mono, Courier New, monospace;
