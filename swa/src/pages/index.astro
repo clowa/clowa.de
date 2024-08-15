@@ -9,7 +9,7 @@ import CardGrid from '../components/CardGrid.astro'
 // import custom scripts
 import  loadRepositories  from '../scripts/loadRepositories.js';
 
-const repos = await loadRepositories();
+const repos = await loadRepositories(['clowa.dev', 'my-setup', 'docker-terraform', 'docker-powershell-core', 'pwsh-toolbox', 'golang-custom-rpi-exporter']);
 ---
 
 <Layout title="Cedric Ahlers">
