@@ -43,7 +43,7 @@ const repos = await loadRepositories(['clowa.dev', 'my-setup', 'docker-terraform
 				/>
 			</ul>
 		</div>
-		<div id="quote-loader" class="loader"></div>
+		<div id="quote-loader" class="pulsar"></div>
 		<p id="quote" class="quote animate-bottom" style="display:none;">
 			<a id="quote-text" role="article" aria-label="Quote of the day"></a></br><strong><a id="quote-author" role="article" aria-label="Author of the quote of the day"></a></strong>
 		</p>
@@ -98,37 +98,48 @@ const repos = await loadRepositories(['clowa.dev', 'my-setup', 'docker-terraform
 		height: auto;
   }
 	/* Loading animation */
-	.loader {
-		position: relative;
+  .pulsar {
+    --uib-size: 40px;
+    --uib-color: rgb(var(--accent-light));
+    --uib-speed: 1.75s;
+    position: relative;
+		margin: 1rem;
 		margin-left: auto;
 		margin-right: auto;
-		border: 4px solid white;
-		border-top: 4px solid rgb(var(--accent-light));
-		border-radius: 50%;
-		width: 40px;
-		height: 40px;
-		animation: spin 2s linear infinite;
-	}
-	@keyframes spin {
-		0% { transform: rotate(0deg); }
-		100% { transform: rotate(360deg); }
-	}
-	/* Loaded content animation */
-	.animate-bottom {
-		position: relative;
-		-webkit-animation-name: animatebottom;
-		-webkit-animation-duration: 1s;
-		animation-name: animatebottom;
-		animation-duration: 1s
-	}
-	@-webkit-keyframes animatebottom {
-		from { bottom:-100px; opacity:0 } 
-		to { bottom:0px; opacity:1 }
-	}
-	@keyframes animatebottom { 
-		from{ bottom:-100px; opacity:0 } 
-		to{ bottom:0; opacity:1 }
-	}
+    height: var(--uib-size);
+    width: var(--uib-size);
+  }
+
+  .pulsar::before,
+  .pulsar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    border-radius: 50%;
+    background-color: var(--uib-color);
+    animation: pulse var(--uib-speed) ease-in-out infinite;
+    transform: scale(0);
+    transition: background-color 0.3s ease;
+  }
+
+  .pulsar::after {
+    animation-delay: calc(var(--uib-speed) / -2);
+  }
+
+  @keyframes pulse {
+    0%,
+    100% {
+      transform: scale(0);
+      opacity: 1;
+    }
+    50% {
+      transform: scale(1);
+      opacity: 0.25;
+    }
+  }
 	/* Quote text */
 	.quote {
 		margin-bottom: 2rem;
