@@ -1,15 +1,21 @@
 ---
+import '@fortawesome/fontawesome-svg-core/styles.css'
+import type { IconDefinition } from '@fortawesome/fontawesome-svg-core';
+import { icon } from '@fortawesome/fontawesome-svg-core';
+
 interface Props {
-	brand: string;
+	icon: IconDefinition
+  brand: string;
 	href: string;
 }
 
-const { href, brand } = Astro.props;
+const { href, brand} = Astro.props;
+const  iconHtml  = icon(Astro.props.icon).html;
 ---
 
 <div class="dot">
   <a href={href} aria-label=`to ${brand}`>
-		<i class:list={['fa-3x', 'fa-brands', `fa-${brand}`]}></i>
+		<i class='fa-3x' set:html={iconHtml}></i>
 	</a>
 </div>
 

@@ -1,6 +1,8 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import SocialBubble from '../components/SocialBubble.astro';
+// add font awesome icons
+import { faGithub, faPaypal, faStackOverflow } from '@fortawesome/free-brands-svg-icons'
 // import the Image component and the image
 import { Image } from 'astro:assets';
 import CardGrid from '../components/CardGrid.astro'
@@ -27,14 +29,17 @@ const repos = await loadRepositories();
 				<SocialBubble
 					brand="github"
 					href="https://github.com/clowa"
+					icon={faGithub}
 				/>
 				<SocialBubble
 					brand="stack-overflow"
 					href="https://stackoverflow.com/users/13078586"
+					icon={faStackOverflow}
 				/>
 				<SocialBubble
 					brand="paypal"
 					href="https://paypal.me/cedricahlers"
+					icon={faPaypal}
 				/>
 			</ul>
 		</div>
