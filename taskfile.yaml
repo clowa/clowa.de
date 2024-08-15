@@ -13,9 +13,11 @@ tasks:
   run:
     deps:
       - build
+    dir: .
     cmds:
       - |
         PATH="/opt/homebrew/opt/node@18/bin:$PATH"
+        source .env
         swa start \
           --app-devserver-url http://localhost:4321 \
           --run 'npm run dev' \
