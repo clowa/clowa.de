@@ -8,10 +8,20 @@
 // }
 
 async function loadRepositories(repositories = array(string)) {
+  const headers = {
+    "Accept": 'application/vnd.github.v3+json',
+    "X-GitHub-Api-Version": "2022-11-28",
+  }
   const repos = [];
 
+  if (process.env.GITHUB_TOKEN) {
+    headers['Authorization'] = `Bearer ${process.env.GITHUB_TOKEN}`;
+  }
+
   for (const r of repositories) {
-    const response = await fetch(`https://api.github.com/repos/clowa/${r}`);
+    const response = await fetch(`https://api.github.com/repos/clowa/${r}`, {
+      headers: headers,
+    });
     if (!response.ok) {
       throw new Error(`Network response was not ok ${response.statusText}`);
     }
