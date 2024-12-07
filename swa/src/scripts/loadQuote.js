@@ -1,4 +1,5 @@
 // Timeout for http call
+// GetQuote API can take up to 30 seconds on a double cold start
 const timeout = 8000;
 
 // Default quote in case the API is not available.
@@ -26,6 +27,10 @@ try {
     }
   }
 } catch (error) {
+  if (error.name === 'AbortError') {
+    console.error("Failed to fetch quote from API: Timeout after " + timeout + "ms");
+  }
+
   console.error("Failed to fetch quote from API: " + error);
 }
 
